@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio — Tienda</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+        font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+        min-height:100vh; display:flex; justify-content:center;
+        align-items:center;
+        background:linear-gradient(135deg,#052e16,#14532d,#4ade80);
+        padding:20px;
+    }
+    .contenedor { width:100%; max-width:440px; }
+    .tarjeta {
+        background:rgba(255,255,255,0.96); backdrop-filter:blur(8px);
+        border-radius:24px; box-shadow:0 20px 50px rgba(0,0,0,0.28);
+        padding:38px 32px; text-align:center; animation:aparecer 0.6s ease;
+    }
+    @keyframes aparecer {
+        from { opacity:0; transform:translateY(22px); }
+        to   { opacity:1; transform:translateY(0); }
+    }
+    .titulo   { font-size:30px; color:#0f172a; margin-bottom:8px; }
+    .subtitulo { font-size:15px; color:#475569; margin-bottom:6px; }
+
+
+    .badges-container {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 22px;
+    }
+    .badge-rol {
+        display:inline-block; padding:6px 14px; border-radius:20px;
+        font-size:12px; font-weight:700; letter-spacing:1px;
+        text-transform:uppercase; display: flex; align-items: center; gap: 5px;
+    }
+    .badge-admin   { background:#1e3a5f; color:#fff; }
+    .badge-usuario { background:#16a34a; color:#fff; }
+
+    .usuario { font-weight:bold; color:#16a34a; }
+    .acciones { display:flex; flex-direction:column; gap:12px; margin-top:10px; }
+
+    .boton {
+        display:block; width:100%; padding:14px 20px; border-radius:14px;
+        text-decoration:none; color:white; font-size:15px; font-weight:bold;
+        transition:all 0.3s ease;
+        background:linear-gradient(135deg,#16a34a,#4ade80);
+        box-shadow:0 8px 18px rgba(22,163,74,0.22);
+        border:none; cursor:pointer; text-align:center;
+    }
+    .boton:hover { transform:translateY(-2px); box-shadow:0 14px 26px rgba(22,163,74,0.35); }
+
+    .logout-btn {
+        width:100%; padding:14px 20px; border:none; border-radius:14px;
+        color:white; font-size:15px; font-weight:bold; cursor:pointer;
+        background:linear-gradient(135deg,#dc2626,#ef4444);
+        transition:all 0.3s ease; box-shadow:0 8px 18px rgba(220,38,38,0.22);
+    }
+    .logout-btn:hover { transform:translateY(-2px); box-shadow:0 14px 26px rgba(220,38,38,0.35); }
+
+    .separador { height:1px; background:#e2e8f0; margin:10px 0; }
+    @media(max-width:480px) { .tarjeta{padding:28px 20px;} .titulo{font-size:24px;} }
+  </style>
+</head>
+<body>
+<div class="contenedor">
+  <div class="tarjeta">
+    <h1 class="titulo">¡Bienvenido!</h1>
+    <p class="subtitulo">
+      Hola, <span class="usuario" th:text="${nombreUsuario + ' ' + apellidoUsuario}">Nombre</span>
+    </p>
+
+    <div class="badges-container">
+      <span sec:authorize="hasRole('ADMIN')" class="badge-rol badge-admin">🛡 ADMIN</span>
+      <span sec:authorize="hasRole('USUARIO')" class="badge-rol badge-usuario">👤 USUARIO</span>
+    </div>
+
+    <div class="acciones">
+      <a th:href="@{/categoria}" class="boton">📂 Categorías</a>
+      <a th:href="@{/producto}"  class="boton">📦 Productos</a>
+      <a th:href="@{/pedido}"    class="boton">🛒 Mis Pedidos</a>
+
+      <a th:href="@{/detalles}" class="boton">📋 Detalles de Pedido</a>
+      <a th:href="@{/usuario}"  class="boton">👥 Gestión de Usuarios</a>
+
+      <div class="separador"></div>
+    </div>
+
+      <form th:action="@{/logout}" method="post">
+        <button type="submit" class="logout-btn">🚪 Cerrar Sesión</button>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

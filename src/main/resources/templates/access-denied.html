@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Acceso Denegado</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}"> <style>
+  body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f4f4f4; }
+  .container { text-align: center; background: white; padding: 50px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+  h1 { color: #e74c3c; font-size: 50px; }
+  p { color: #555; font-size: 18px; }
+  .btn { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #3498db; color: white; text-decoration: none; border-radius: 5px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>¡Alto ahí!</h1>
+  <p>No tienes permisos suficientes para acceder a esta sección.</p>
+  <p>Esta área está reservada exclusivamente para <strong>Administradores</strong>.</p>
+  <a th:href="@{/home}" class="btn">Volver al Inicio</a>
+</div>
+</body>
+</html>
