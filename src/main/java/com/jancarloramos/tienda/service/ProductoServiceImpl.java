@@ -29,12 +29,14 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public Producto actualizar(Integer id, Producto producto) {
-        Producto productoExistente = buscarPorId(id);
-        productoExistente.setNombreProducto(producto.getNombreProducto());
-        productoExistente.setPrecioProducto(producto.getPrecioProducto());
-        productoExistente.setStockProducto(producto.getStockProducto());
-        productoExistente.setIdCategoria(producto.getIdCategoria()); // CAMBIO: faltaba esta línea
-        return productoRepository.save(productoExistente);
+        return productoRepository.findById(id)
+                .map(existente -> {
+                    existente.setNombreProducto(producto.getNombreProducto());
+                    existente.setPrecioProducto(producto.getPrecioProducto());
+                    existente.setStockProducto(producto.getStockProducto());
+                    existente.setIdCategoria(producto.getIdCategoria());
+                    return productoRepository.save(existente);
+                }).orElseThrow(() -> new ResourceNotFoundException("No se encontró el ID: " + id));
     }
 
     @Override

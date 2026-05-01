@@ -5,54 +5,131 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalles de Pedido — Tienda</title>
     <style>
+
+        :root {
+            --azul-marino: #1a237e;
+            --morado-oscuro: #4a148c;
+            --morado-claro: #7c43bd;
+            --blanco: #ffffff;
+            --gris-fondo: #f0f2f5;
+        }
+
         *{margin:0;padding:0;box-sizing:border-box;}
-        body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;min-height:100vh;background:linear-gradient(135deg,#052e16,#14532d,#4ade80);padding:30px 20px;}
+
+        body {
+            font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+            min-height:100vh;
+            background: linear-gradient(135deg, #0d1252, #1a237e, #4a148c);
+            padding:30px 20px;
+        }
+
         .pagina{max-width:980px;margin:0 auto;}
+
         .cabecera{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
         .cabecera h1{color:#fff;font-size:28px;text-shadow:0 2px 8px rgba(0,0,0,.3);}
         .cabecera-acciones{display:flex;gap:10px;}
+
         .btn{padding:10px 20px;border:none;border-radius:12px;font-size:14px;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-block;transition:all .3s;}
-        .btn-nuevo{background:linear-gradient(135deg,#16a34a,#4ade80);color:#fff;box-shadow:0 6px 14px rgba(22,163,74,.25);}
-        .btn-nuevo:hover{transform:translateY(-2px);}
-        .btn-volver{background:linear-gradient(135deg,#3b1f0a,#78350f);color:#fff;box-shadow:0 6px 14px rgba(59,31,10,.25);}
-        .btn-volver:hover{transform:translateY(-2px);}
-        .alerta-exito{background:#dcfce7;color:#15803d;border:1px solid #bbf7d0;border-radius:12px;padding:12px 18px;margin-bottom:18px;font-weight:500;font-size:14px;}
+
+        .btn-nuevo {
+            background: linear-gradient(135deg, var(--morado-oscuro), var(--morado-claro));
+            color:#fff; box-shadow:0 6px 14px rgba(74,20,140,0.3);
+        }
+        .btn-nuevo:hover { transform:translateY(-2px); filter: brightness(1.1); }
+
+        .btn-volver {
+            background: #0d1252;
+            color:#fff; box-shadow:0 6px 14px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-volver:hover { transform:translateY(-2px); background: #151b77; }
+
+        .alerta-exito {
+            background:#e8eaf6; color: var(--azul-marino);
+            border:1px solid #c5cae9; border-radius:12px;
+            padding:12px 18px; margin-bottom:18px; font-weight:500; font-size:14px;
+        }
+
         .buscador-wrap{margin-bottom:16px;}
-        .buscador{width:100%;padding:12px 16px;border:none;border-radius:12px;font-size:14px;outline:none;background:rgba(255,255,255,.92);box-shadow:0 4px 12px rgba(0,0,0,.1);}
-        .buscador:focus{background:#fff;}
+        .buscador {
+            width:100%; padding:12px 16px; border:none; border-radius:12px;
+            font-size:14px; outline:none;
+            background:rgba(255,255,255,.92); box-shadow:0 4px 12px rgba(0,0,0,.1);
+        }
+        .buscador:focus{background:#fff; box-shadow: 0 0 0 3px rgba(74,20,140,0.2);}
+
         .tarjeta-tabla{background:rgba(255,255,255,.96);border-radius:20px;box-shadow:0 16px 40px rgba(0,0,0,.2);overflow:hidden;}
         table{width:100%;border-collapse:collapse;}
-        thead tr{background:linear-gradient(135deg,#3b1f0a,#78350f);color:#fff;}
+
+        thead tr{background: var(--azul-marino); color:#fff;}
         thead th{padding:16px 18px;text-align:left;font-size:13px;letter-spacing:.6px;text-transform:uppercase;}
+
         tbody tr{border-bottom:1px solid #f1f5f9;transition:background .2s;}
         tbody tr:last-child{border-bottom:none;}
-        tbody tr:hover{background:#f0fdf4;}
+        tbody tr:hover{background:#ede7f6;}
         tbody td{padding:14px 18px;color:#1e293b;font-size:14px;}
+
         .acciones-td{display:flex;gap:8px;}
-        .btn-editar{background:linear-gradient(135deg,#1e3a5f,#2563eb);color:#fff;padding:7px 14px;border-radius:9px;font-size:12px;border:none;cursor:pointer;text-decoration:none;font-weight:bold;transition:all .3s;}
-        .btn-editar:hover{transform:translateY(-1px);}
-        .btn-eliminar{background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff;padding:7px 14px;border-radius:9px;font-size:12px;border:none;cursor:pointer;font-weight:bold;transition:all .3s;}
-        .btn-eliminar:hover{transform:translateY(-1px);}
+
+        .btn-editar{
+            background: var(--azul-marino);
+            color:#fff; padding:7px 14px; border-radius:9px; font-size:12px;
+            border:none; cursor:pointer; text-decoration:none;
+            font-weight:bold; transition:all .3s;
+        }
+        .btn-editar:hover { background: #283593; transform:translateY(-1px); }
+
+        .btn-eliminar {
+            background: linear-gradient(135deg, #d32f2f, #f44336);
+            color:#fff; padding:7px 14px; border-radius:9px; font-size:12px;
+            border:none; cursor:pointer; font-weight:bold; transition:all .3s;
+        }
+        .btn-eliminar:hover { transform:translateY(-1px); }
+
         .sin-datos{text-align:center;padding:40px;color:#94a3b8;font-size:15px;}
-        .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);z-index:1000;justify-content:center;align-items:center;}
+
+        .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(3px);z-index:1000;justify-content:center;align-items:center;}
         .overlay.activo{display:flex;}
-        .modal{background:#fff;border-radius:20px;padding:36px 32px;width:100%;max-width:480px;box-shadow:0 24px 60px rgba(0,0,0,.35);animation:popIn .3s ease;}
+
+        .modal {
+            background:#fff; border-radius:20px; padding:36px 32px; width:100%; max-width:480px;
+            box-shadow:0 24px 60px rgba(0,0,0,.35); animation:popIn .3s ease;
+            border-top: 8px solid var(--morado-oscuro);
+        }
         @keyframes popIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
-        .modal h2{color:#0f172a;font-size:22px;margin-bottom:22px;text-align:center;}
+
+        .modal h2{color: var(--azul-marino); font-size:22px; margin-bottom:22px; text-align:center;}
         .campo{margin-bottom:16px;}
         .campo label{display:block;font-size:12px;color:#64748b;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;font-weight:600;}
-        .campo input{width:100%;padding:12px 14px;border:1px solid #bbf7d0;border-radius:10px;font-size:14px;outline:none;background:#f8fafc;transition:all .3s;}
-        .campo input:focus{border-color:#16a34a;box-shadow:0 0 0 4px rgba(22,163,74,.12);background:#fff;}
+
+
+        .campo input, .campo select{
+            width:100%; padding:12px 14px; border:1px solid #c5cae9;
+            border-radius:10px; font-size:14px; outline:none;
+            background:#f8fafc; transition:all .3s;
+            font-family: inherit;
+        }
+        .campo input:focus, .campo select:focus{border-color: var(--morado-oscuro); box-shadow:0 0 0 4px rgba(74,20,140,.1); background:#fff;}
+
         .error-campo{color:#b91c1c;font-size:12px;margin-top:4px;}
         .modal-acciones{display:flex;gap:10px;margin-top:20px;justify-content:flex-end;}
-        .btn-guardar{background:linear-gradient(135deg,#16a34a,#4ade80);color:#fff;padding:11px 24px;border-radius:12px;border:none;font-size:14px;font-weight:bold;cursor:pointer;transition:all .3s;}
-        .btn-guardar:hover{transform:translateY(-2px);}
+
+        .btn-guardar {
+            background: var(--morado-oscuro); color:#fff;
+            padding:11px 24px; border-radius:12px; border:none;
+            font-size:14px; font-weight:bold; cursor:pointer; transition:all .3s;
+        }
+        .btn-guardar:hover { background: var(--morado-claro); transform:translateY(-2px); }
+
         .btn-cancelar{background:#e2e8f0;color:#475569;padding:11px 24px;border-radius:12px;border:none;font-size:14px;font-weight:bold;cursor:pointer;transition:all .3s;}
-        .btn-cancelar:hover{background:#cbd5e1;}
-        .modal-confirmar h2{color:#dc2626;}
-        .modal-confirmar p{text-align:center;color:#475569;font-size:14px;margin-bottom:20px;}
-        .btn-confirmar-eliminar{background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff;padding:11px 24px;border-radius:12px;border:none;font-size:14px;font-weight:bold;cursor:pointer;transition:all .3s;text-decoration:none;}
-        .btn-confirmar-eliminar:hover{transform:translateY(-2px);}
+
+        .btn-confirmar-eliminar {
+            background: #d32f2f; color:#fff;
+            padding:11px 24px; border-radius:12px; border:none; font-size:14px;
+            font-weight:bold; cursor:pointer; transition:all .3s; text-decoration:none;
+        }
+
+        @media(max-width:600px){.cabecera{flex-direction:column;align-items:flex-start;}.modal{padding:26px 18px;margin:0 12px;}}
     </style>
 </head>
 <body>
@@ -98,84 +175,100 @@
     </div>
 </div>
 
-
 <div class="overlay" id="modalOverlay" th:classappend="${mostrarModal} ? 'activo' : ''">
     <div class="modal">
         <h2 th:text="${modoEdicion} ? '✏ Editar Detalle' : '+ Nuevo Detalle'"></h2>
-        <form th:if="${modoEdicion}"
-              th:action="@{/detalles/actualizar/{id}(id=${detalleForm.idDetalle})}"
+        <form th:action="${modoEdicion} ? @{/detalles/actualizar/{id}(id=${detalleForm.idDetalle})} : @{/detalles/guardar}"
               th:object="${detalleForm}" method="post">
-            <div class="campo"><label>Cantidad</label>
+
+            <div class="campo">
+                <label>Cantidad</label>
                 <input type="number" th:field="*{cantidadPedido}" placeholder="Cantidad" min="1">
                 <span class="error-campo" th:if="${#fields.hasErrors('cantidadPedido')}" th:errors="*{cantidadPedido}"></span>
             </div>
-            <div class="campo"><label>Precio Unitario (Q)</label>
-                <input type="number" step="0.01" th:field="*{precioUnitario}" placeholder="0.00">
-                <span class="error-campo" th:if="${#fields.hasErrors('precioUnitario')}" th:errors="*{precioUnitario}"></span>
-            </div>
-            <div class="campo"><label>ID Pedido</label>
-                <input type="number" th:field="*{idPedido}" placeholder="ID del pedido">
-                <span class="error-campo" th:if="${#fields.hasErrors('idPedido')}" th:errors="*{idPedido}"></span>
-            </div>
-            <div class="campo"><label>ID Producto</label>
-                <input type="number" th:field="*{idProducto}" placeholder="ID del producto">
+
+            <div class="campo">
+                <label>📦 Producto</label>
+                <select th:field="*{idProducto}" id="productoSelect" required>
+                    <option value="" disabled selected>-- Seleccione un producto --</option>
+                    <option th:each="p : ${productos}"
+                            th:value="${p.idProducto}"
+                            th:attr="data-precio=${p.precioProducto}"
+                            th:text="${p.nombreProducto} + ' (Q' + ${p.precioProducto} + ')'">
+                    </option>
+                </select>
                 <span class="error-campo" th:if="${#fields.hasErrors('idProducto')}" th:errors="*{idProducto}"></span>
             </div>
-            <div class="modal-acciones">
-                <button type="button" class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
-                <button type="submit" class="btn-guardar">💾 Guardar Cambios</button>
-            </div>
-        </form>
-        <form th:unless="${modoEdicion}" th:action="@{/detalles/guardar}" th:object="${detalleForm}" method="post">
-            <div class="campo"><label>Cantidad</label>
-                <input type="number" th:field="*{cantidadPedido}" placeholder="Cantidad" min="1">
-                <span class="error-campo" th:if="${#fields.hasErrors('cantidadPedido')}" th:errors="*{cantidadPedido}"></span>
-            </div>
-            <div class="campo"><label>Precio Unitario (Q)</label>
-                <input type="number" step="0.01" th:field="*{precioUnitario}" placeholder="0.00">
+
+            <div class="campo">
+                <label>Precio Unitario (Q)</label>
+                <input type="number" step="0.01" th:field="*{precioUnitario}" id="precioInput" placeholder="0.00">
                 <span class="error-campo" th:if="${#fields.hasErrors('precioUnitario')}" th:errors="*{precioUnitario}"></span>
             </div>
-            <div class="campo"><label>ID Pedido</label>
-                <input type="number" th:field="*{idPedido}" placeholder="ID del pedido">
+
+            <div class="campo">
+                <label>📋 Vincular a Pedido</label>
+                <select th:field="*{idPedido}" required>
+                    <option value="" disabled selected>-- Seleccione un pedido --</option>
+                    <option th:each="ped : ${pedidos}"
+                            th:value="${ped.idPedido}"
+                            th:text="'Pedido #' + ${ped.idPedido} + ' - ' + ${ped.fechaPedido}">
+                    </option>
+                </select>
                 <span class="error-campo" th:if="${#fields.hasErrors('idPedido')}" th:errors="*{idPedido}"></span>
             </div>
-            <div class="campo"><label>ID Producto</label>
-                <input type="number" th:field="*{idProducto}" placeholder="ID del producto">
-                <span class="error-campo" th:if="${#fields.hasErrors('idProducto')}" th:errors="*{idProducto}"></span>
-            </div>
+
             <div class="modal-acciones">
                 <button type="button" class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
-                <button type="submit" class="btn-guardar">💾 Guardar</button>
+                <button type="submit" class="btn-guardar" th:text="${modoEdicion} ? '💾 Guardar Cambios' : '💾 Guardar'"></button>
             </div>
         </form>
     </div>
 </div>
 
-
 <div class="overlay" id="modalEliminar">
-    <div class="modal modal-confirmar">
-        <h2>⚠ Confirmar Eliminación</h2>
-        <p id="textoConfirmar"></p>
+    <div class="modal">
+        <h2 style="color: #d32f2f;">⚠ Confirmar Eliminación</h2>
+        <p id="textoConfirmar" style="text-align:center; color:#475569; margin: 15px 0;"></p>
         <div class="modal-acciones" style="justify-content:center;">
             <button class="btn-cancelar" onclick="cerrarConfirmar()">Cancelar</button>
             <a id="linkEliminar" href="#" class="btn-confirmar-eliminar">Sí, Eliminar</a>
         </div>
     </div>
 </div>
+
 <script>
+
+    document.getElementById('productoSelect').addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        const precio = selectedOption.getAttribute('data-precio');
+        const inputPrecio = document.getElementById('precioInput');
+        if(inputPrecio && precio) {
+            inputPrecio.value = precio;
+        }
+    });
+
     function abrirModalNuevo(){document.getElementById('modalOverlay').classList.add('activo');}
-    function cerrarModal(){document.getElementById('modalOverlay').classList.remove('activo');}
+    function cerrarModal(){
+        document.getElementById('modalOverlay').classList.remove('activo');
+        if(window.location.href.includes('editar')) window.location.href = '/detalles';
+    }
     function abrirConfirmarEliminar(url,nombre){
-        document.getElementById('textoConfirmar').textContent='¿Estás seguro de eliminar "'+nombre+'"? Esta acción no se puede deshacer.';
+        document.getElementById('textoConfirmar').textContent='¿Estás seguro de eliminar "'+nombre+'"?';
         document.getElementById('linkEliminar').href=url;
         document.getElementById('modalEliminar').classList.add('activo');
     }
     function cerrarConfirmar(){document.getElementById('modalEliminar').classList.remove('activo');}
+
     document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)cerrarModal();});
     document.getElementById('modalEliminar').addEventListener('click',function(e){if(e.target===this)cerrarConfirmar();});
+
     function filtrarTabla(){
         const f=document.getElementById('buscador').value.toLowerCase();
-        document.querySelectorAll('#tablaDetalle tbody tr').forEach(r=>{r.style.display=r.textContent.toLowerCase().includes(f)?'':'none';});
+        document.querySelectorAll('#tablaDetalle tbody tr').forEach(r=>{
+            if(r.querySelector('.sin-datos')) return;
+            r.style.display=r.textContent.toLowerCase().includes(f)?'':'none';
+        });
     }
 </script>
 </body>

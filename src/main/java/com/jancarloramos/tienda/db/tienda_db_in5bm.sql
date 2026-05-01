@@ -1,23 +1,22 @@
 drop database if exists tienda_db_in5bm;
 create database tienda_db_in5bm;
-use tienda_db_in5bm;
+USE tienda_db_in5bm;
  
-create table usuario(
-	id_usuario int auto_increment not null primary key,
-    nombre_usuario varchar(60) not null,
-    apellido_usuario varchar(60) not null,
-    email varchar(60) not null,
-    password varchar(60) not null,
-    edad_usuario int not null,
-    rol varchar(20) not null
+CREATE TABLE usuario (
+    id_usuario INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    nombre_usuario VARCHAR(60) NOT NULL,
+    apellido_usuario VARCHAR(60) NOT NULL,
+    edad_usuario INT NOT NULL,
+    email varchar(100) not null unique,
+    password varchar(255) not null,
+    rol varchar(50) not null
 );
-
+ 
 create table categoria(
 	id_categoria int auto_increment not null primary key,
     nombre_categoria varchar(60) not null,
     descripcion_categoria varchar(150)
 );
- 
 create table producto(
 	id_producto int auto_increment not null primary key,
     nombre_producto varchar(80) not null,
@@ -28,9 +27,8 @@ create table producto(
         foreign key (id_categoria)
         references categoria(id_categoria)
         on delete cascade
-        on update cascade
+        on update cascade 
 );
- 
 create table pedido(
 	id_pedido int auto_increment not null primary key,
     fecha_pedido varchar(60) not null,
@@ -39,10 +37,9 @@ create table pedido(
     constraint fk_pedido_usuario
         foreign key (id_usuario)
         references usuario(id_usuario)
-        on delete cascade
-        on update cascade
+		on delete cascade
+        on update cascade 
 );
- 
 create table detalle_pedido(
 	id_detalle int auto_increment not null primary key,
     cantidad int not null,
@@ -57,7 +54,8 @@ create table detalle_pedido(
     constraint fk_detalle_producto
         foreign key (id_producto)
         references producto(id_producto)
-        on delete cascade
-        on update cascade
+		on delete cascade
+        on update cascade 
 );
- 
+// El usuario se cambia desde la edicion de SQL para que sea ADMIN
+select * from usuario;

@@ -2,7 +2,8 @@ package com.jancarloramos.tienda.controller;
 
 import com.jancarloramos.tienda.entity.Pedido;
 import com.jancarloramos.tienda.service.PedidoService;
-import com.jancarloramos.tienda.service.UsuarioService; // IMPORTANTE
+import com.jancarloramos.tienda.service.ProductoService; // NUEVO
+import com.jancarloramos.tienda.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,18 +17,21 @@ public class PedidoViewController {
 
     private final PedidoService pedidoService;
     private final UsuarioService usuarioService;
+    private final ProductoService productoService; // NUEVO
 
-    public PedidoViewController(PedidoService pedidoService, UsuarioService usuarioService) {
+    // Constructor actualizado con ProductoService
+    public PedidoViewController(PedidoService pedidoService, UsuarioService usuarioService, ProductoService productoService) {
         this.pedidoService = pedidoService;
         this.usuarioService = usuarioService;
+        this.productoService = productoService;
     }
 
     @GetMapping
     public String listar(Model model) {
         model.addAttribute("pedidos", pedidoService.listar());
         model.addAttribute("pedidoForm", new Pedido());
-
         model.addAttribute("usuarios", usuarioService.listar());
+        model.addAttribute("productos", productoService.listar()); // NUEVO: Envía productos a la vista
         return "pedido-lista";
     }
 
@@ -39,6 +43,7 @@ public class PedidoViewController {
         if (result.hasErrors()) {
             model.addAttribute("pedidos", pedidoService.listar());
             model.addAttribute("usuarios", usuarioService.listar());
+            model.addAttribute("productos", productoService.listar()); // NUEVO
             model.addAttribute("mostrarModal", true);
             return "pedido-lista";
         }
@@ -47,7 +52,7 @@ public class PedidoViewController {
             pedidoService.crear(pedido);
             redirectAttributes.addFlashAttribute("mensajeExito", "Pedido guardado correctamente");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("mensajeError", "Error al guardar: Verifique que el usuario sea válido.");
+            redirectAttributes.addFlashAttribute("mensajeError", "Error al guardar el pedido.");
         }
 
         return "redirect:/pedido";
@@ -58,6 +63,7 @@ public class PedidoViewController {
         model.addAttribute("pedidos", pedidoService.listar());
         model.addAttribute("pedidoForm", pedidoService.buscarPorId(id));
         model.addAttribute("usuarios", usuarioService.listar());
+        model.addAttribute("productos", productoService.listar()); // NUEVO
         model.addAttribute("modoEdicion", true);
         model.addAttribute("mostrarModal", true);
         return "pedido-lista";
@@ -72,6 +78,7 @@ public class PedidoViewController {
         if (result.hasErrors()) {
             model.addAttribute("pedidos", pedidoService.listar());
             model.addAttribute("usuarios", usuarioService.listar());
+            model.addAttribute("productos", productoService.listar()); // NUEVO
             model.addAttribute("modoEdicion", true);
             model.addAttribute("mostrarModal", true);
             return "pedido-lista";

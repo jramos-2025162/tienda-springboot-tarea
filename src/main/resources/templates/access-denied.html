@@ -1,22 +1,174 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Acceso Denegado</title>
-  <link rel="stylesheet" th:href="@{/css/style.css}"> <style>
-  body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #f4f4f4; }
-  .container { text-align: center; background: white; padding: 50px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-  h1 { color: #e74c3c; font-size: 50px; }
-  p { color: #555; font-size: 18px; }
-  .btn { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #3498db; color: white; text-decoration: none; border-radius: 5px; }
-</style>
+    <meta charset="UTF-8">
+    <title>Acceso Denegado</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+          --primary: #4f46e5;
+          --primary-light: #6366f1;
+          --bg-dark: #0f172a;
+          --card: rgba(255,255,255,0.08);
+          --text: #ffffff;
+          --subtext: #cbd5f5;
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        body {
+          margin: 0;
+          font-family: 'Inter', sans-serif;
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: radial-gradient(circle at 20% 20%, #1e293b, #0f172a 70%);
+          color: var(--text);
+        }
+
+        .wrapper {
+          text-align: center;
+          max-width: 480px;
+          padding: 20px;
+        }
+
+        .card {
+          position: relative;
+          z-index: 1;
+          border-radius: 18px;
+          padding: 55px 35px;
+          background: var(--card);
+          backdrop-filter: blur(18px);
+          border: 1px solid transparent;
+
+          box-shadow:
+            0 10px 30px rgba(0,0,0,0.4),
+            inset 0 0 20px rgba(255,255,255,0.05);
+
+          animation: fadeIn 0.6s ease;
+        }
+
+
+        .card::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: 18px;
+          padding: 1.5px;
+
+          background: linear-gradient(135deg, #6366f1, #ec4899, #f97316);
+
+          -webkit-mask:
+            linear-gradient(#000 0 0) content-box,
+            linear-gradient(#000 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+
+          filter: blur(6px);
+          z-index: -1;
+        }
+
+        .icon {
+          font-size: 55px;
+          margin-bottom: 15px;
+          position: relative;
+          display: inline-block;
+        }
+
+        .icon::after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 80px;
+          height: 80px;
+          transform: translate(-50%, -50%);
+          background: radial-gradient(circle, rgba(239,68,68,0.4), transparent 70%);
+          filter: blur(10px);
+          z-index: -1;
+        }
+
+        h1 {
+          font-size: 28px;
+          margin-bottom: 12px;
+          font-weight: 600;
+        }
+
+        p {
+          font-size: 15px;
+          color: var(--subtext);
+          margin: 6px 0;
+          line-height: 1.6;
+        }
+
+        strong {
+          color: #ffffff;
+          font-weight: 500;
+        }
+
+        .btn {
+          display: inline-block;
+          margin-top: 30px;
+          padding: 12px 26px;
+          border-radius: 10px;
+          background: linear-gradient(135deg, var(--primary), var(--primary-light));
+          color: white;
+          text-decoration: none;
+          font-size: 14px;
+          font-weight: 500;
+          transition: all 0.3s ease;
+          box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+        }
+
+        .btn:hover {
+          transform: translateY(-2px) scale(1.03);
+          box-shadow: 0 10px 30px rgba(99,102,241,0.6);
+        }
+
+        footer {
+          margin-top: 18px;
+          font-size: 12px;
+          color: #94a3b8;
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(15px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+    </style>
 </head>
+
 <body>
-<div class="container">
-  <h1>¡Alto ahí!</h1>
-  <p>No tienes permisos suficientes para acceder a esta sección.</p>
-  <p>Esta área está reservada exclusivamente para <strong>Administradores</strong>.</p>
-  <a th:href="@{/home}" class="btn">Volver al Inicio</a>
+<div class="wrapper">
+    <div class="card">
+
+        <div class="icon">🔒</div>
+
+        <h1>Acceso restringido</h1>
+
+        <p>No tienes permisos para acceder a esta sección.</p>
+        <p>Área exclusiva para <strong>Administradores</strong>.</p>
+
+        <a th:href="@{/home}" class="btn">Volver al inicio</a>
+
+    </div>
+
+    <footer>
+        Acceso prohibido
+    </footer>
 </div>
 </body>
 </html>

@@ -5,13 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrarse — Tienda</title>
     <style>
+
+        :root {
+            --azul-marino: #1a237e;
+            --morado-oscuro: #4a148c;
+            --morado-claro: #7c43bd;
+            --blanco: #ffffff;
+            --gris-texto: #64748b;
+        }
+
         * { margin:0; padding:0; box-sizing:border-box; }
 
         body {
             font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height:100vh; display:flex; justify-content:center;
             align-items:center;
-            background:linear-gradient(135deg,#052e16,#14532d,#4ade80);
+
+            background: linear-gradient(135deg, #0d1252, #1a237e, #4a148c);
             padding:20px;
         }
 
@@ -19,7 +29,7 @@
 
         .tarjeta {
             background:rgba(255,255,255,0.96); backdrop-filter:blur(8px);
-            border-radius:24px; box-shadow:0 20px 50px rgba(0,0,0,0.25);
+            border-radius:24px; box-shadow:0 20px 50px rgba(0,0,0,0.35);
             padding:35px 30px; text-align:center;
             animation:aparecer 0.6s ease;
         }
@@ -29,41 +39,43 @@
             to { opacity:1; transform:translateY(0); }
         }
 
-        .titulo { font-size:28px; color:#0f172a; margin-bottom:8px; }
-        .subtitulo { font-size:14px; color:#475569; margin-bottom:22px; }
+        .titulo { font-size:28px; color: var(--azul-marino); margin-bottom:8px; }
+        .subtitulo { font-size:14px; color: var(--gris-texto); margin-bottom:22px; }
 
         .campo { margin-bottom:16px; text-align:left; }
 
         .campo label {
-            display:block; font-size:12px; color:#64748b;
+            display:block; font-size:12px; color: var(--gris-texto);
             margin-bottom:5px; text-transform:uppercase;
             letter-spacing:.5px; font-weight:600;
         }
 
         .campo input, .campo select {
-            width:100%; padding:13px 15px; border:1px solid #bbf7d0;
+            width:100%; padding:13px 15px; border:1px solid #c5cae9;
             border-radius:12px; font-size:14px; outline:none;
             background:#f8fafc; transition:all .3s;
             font-family: inherit;
         }
 
         .campo input:focus, .campo select:focus {
-            background:#fff; border-color:#16a34a;
-            box-shadow:0 0 0 4px rgba(22,163,74,.12);
+            background:#fff; border-color: var(--morado-oscuro);
+            box-shadow:0 0 0 4px rgba(74,20,140,.12);
         }
+
 
         .boton {
             width:100%; padding:13px 20px; border:none;
             border-radius:14px; color:#fff; font-size:15px;
             font-weight:bold; cursor:pointer; transition:all .3s;
-            background:linear-gradient(135deg,#16a34a,#4ade80);
-            box-shadow:0 8px 18px rgba(22,163,74,.22);
+            background: linear-gradient(135deg, var(--morado-oscuro), var(--morado-claro));
+            box-shadow:0 8px 18px rgba(74,20,140,.25);
             margin-top: 10px;
         }
 
         .boton:hover {
             transform:translateY(-2px);
-            box-shadow:0 14px 26px rgba(22,163,74,0.35);
+            box-shadow:0 14px 26px rgba(74,20,140,0.4);
+            filter: brightness(1.1);
         }
 
         .boton:active { transform:scale(.98); }
@@ -74,9 +86,9 @@
             font-weight:500; margin-bottom:10px; text-align:center;
         }
 
-        p { margin-top:18px; font-size:13px; color:#64748b; }
-        a { color:#16a34a; font-weight: 600; text-decoration: none; }
-        a:hover { text-decoration: underline; }
+        p { margin-top:18px; font-size:13px; color: var(--gris-texto); }
+        a { color: var(--azul-marino); font-weight: 600; text-decoration: none; }
+        a:hover { color: var(--morado-oscuro); text-decoration: underline; }
 
         @media(max-width:480px) {
             .tarjeta { padding:26px 18px; }
@@ -114,13 +126,8 @@
                        placeholder="correo@ejemplo.com" required>
             </div>
 
-            <div class="campo">
-                <label for="rol">Nivel de Acceso</label>
-                <select name="rol" id="rol" required>
-                    <option value="USUARIO">👤 Cliente Estándar</option>
-                    <option value="ADMIN">🛡 Administrador</option>
-                </select>
-            </div>
+            <!-- Rol fijado a USUARIO: solo el administrador definido en BD puede ser ADMIN -->
+            <input type="hidden" name="rol" value="USUARIO">
 
             <div class="campo">
                 <label for="edadUsuario">Edad</label>

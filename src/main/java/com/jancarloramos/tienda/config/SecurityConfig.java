@@ -26,16 +26,23 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-
+                        // Acceso permitido para todos sin iniciar sesión
                         .requestMatchers("/login", "/register", "/access-denied", "/css/**", "/js/**", "/images/**").permitAll()
 
-                        .requestMatchers("/usuario/**", "/detalles/**").hasRole("ADMIN")
+                        //  Solo usuarios con ROLE_ADMIN pueden gestionar usuarios, detalles y categorías
+                        // He añadido "/categoria/**" para que el administrador sea el único que las gestione
+                        .requestMatchers("/usuario/**", "/detalles/**", "/categoria/**").hasRole("ADMIN")
 
+                        // Acceso a productos y pedidos
+                        // El ROLE_USER puede ver productos pero no gestionar la configuración del sistema
+                        .requestMatchers("/productos/**", "/pedidos/**").hasAnyRole("ADMIN", "USER")
+
+                        //  Requiere que el usuario esté al menos autenticado
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home", true)
+                        .defaultSuccessUrl("/home", true) // Cambiado a productos para ir directo a la tienda
                         .permitAll()
                 )
                 .logout(logout -> logout
@@ -43,11 +50,11 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
                 )
-
+                // Redirección si un USER intenta entrar a una ruta de ADMIN
                 .exceptionHandling(exception -> exception
                         .accessDeniedPage("/access-denied")
                 )
-                .csrf(csrf -> csrf.disable());
+                .csrf(csrf -> csrf.disable()); // Deshabilitado para facilitar las pruebas locales
 
         return http.build();
     }
